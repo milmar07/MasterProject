@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>{% block title %} SC data {% endblock %}</h1>
+    {% for scData in scData %}
+        <div class="scData">
+            <h3>#{{ scData[0] }} -- {{ scData[1] }}  -- {{ scData[2] }} -- {{ scData[3] }} -- {{ scData[4] }}</h3>
+        </div>
+    {% endfor %}
+{% endblock %}

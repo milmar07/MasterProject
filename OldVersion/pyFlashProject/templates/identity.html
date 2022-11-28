@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>{% block title %} Create Identity Claim {% endblock %}</h1>
+    <form method="post" action="{{ url_for('identity_create')}}">
+        <input type="text" name="identity" placeholder="Identity"> <br> <br>
+        <input type="text" name="validationUrl" placeholder="ValidationURL"> <br><br>
+
+        <input type="submit">
+    </form>
+{% endblock %}
