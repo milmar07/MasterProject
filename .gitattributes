@@ -1,0 +1,5 @@
+OldVersion/wasp-master/wasp filter=lfs diff=lfs merge=lfs -text
+OldVersion/wasp-master/wasp-cl filter=lfs diff=lfs merge=lfs -text
+OldVersion/wasp-master/wasp-cli filter=lfs diff=lfs merge=lfs -text
+OldVersion/wasp-master/evmemulator filter=lfs diff=lfs merge=lfs -text
+OldVersion/wasp-master/wasp.log filter=lfs diff=lfs merge=lfs -text

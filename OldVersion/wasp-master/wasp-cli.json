@@ -1,0 +1,29 @@
+{
+  "chain": "testchain",
+  "chains": {
+    "finalchain": "tGuson6L4DkjnG29Q2ETi9R2GUGkSe4emgmd1yxtpB9N",
+    "firstchain": "kGpPTN1fGZ6Twtek6vj8itVU2Yqac7xTEnhuUpMSx82u",
+    "mm": "eb978hdxBNBcmTzc9HFpWDPtYoFh8vtqEjnZYaW3Me6J",
+    "mtc": "qNEatQMgJVJAtCLe5oft82doj6iVGCBDt2gqa73TeUhR",
+    "testchain": "rms1prr4r7az8e46qhagz5atugjm6x0xrg27d84677e3lurg0s6s76jr59dw4ls",
+    "ts1": "cNLXknznqj54mYt5xZrPTAH27fooeQyUXPRVo35XL48B"
+  },
+  "goshimmer": {
+    "api": "https://api.goshimmer.sc.iota.org",
+    "faucetpowtarget": -1
+  },
+  "l1": {
+    "apiaddress": "https://api.testnet.shimmer.network",
+    "faucetaddress": "https://faucet.testnet.shimmer.network"
+  },
+  "wallet": {
+    "seed": "4mvNYmFJsvvVTjfQoiTziTaUJTJQa9Yt2KCcZ13jmWCb"
+  },
+  "wasp": {
+    "0": {
+      "api": "127.0.0.1:9090",
+      "nanomsg": "127.0.0.1:5550",
+      "peering": "127.0.0.1:4000"
+    }
+  }
+}

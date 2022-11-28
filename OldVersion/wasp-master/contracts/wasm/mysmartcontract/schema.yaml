@@ -1,0 +1,85 @@
+name: GraphOfTrust
+description: The Graph of Trust is a distributed public key infrastructure
+events:
+  identityClaimCreated:
+    timestamp: Int64
+    transactionHash: Hash
+    identifier: String
+    validationUrl: String
+    publicKey: String
+    signature: String
+  declarationCreated:
+    timestamp: Int64
+    transactionHash: Hash
+    signorHash: Hash
+    objectHash: Hash
+    declarationType: String
+    signature: String
+structs:
+  IdentityClaim:
+    timestamp: Int64
+    transactionHash: Hash
+    identifier: String
+    validationUrl: String
+    publicKey: String
+    signature: String
+  Declaration:
+    timestamp: Int64
+    transactionHash: Hash
+    signorHash: Hash
+    objectHash: Hash
+    declarationType: String
+    signature: String
+typedefs: {}
+state:
+  owner: AgentID
+  identityClaims: map[Hash]IdentityClaim
+  declarations: map[Hash]Declaration
+funcs:
+  init:
+    params:
+      owner: AgentID? // optional owner of this smart contract
+  setOwner:
+    access: owner // current owner of this smart contract
+    params:
+      owner: AgentID // new owner of this smart contract
+  setIdentifier:
+    params:
+      identifier: String // Setting the identifier
+  setValidationUrl:
+    params:
+      validationUrl: String // Setting the validation URL
+  setPublicKey:
+    params:
+      publicKey: String // Setting the publicKey
+  setSignature:
+    params:
+      signature: String // Setting the signature
+  createIdentityClaim:
+    params:
+      identifier: String
+      validationUrl: String
+      publicKey: String
+      signature: String
+  createDeclaration:
+    params:
+      signorHash: Hash
+      objectHash: Hash
+      declarationType: String
+      signature: String
+views:
+  getOwner:
+    results:
+      owner: AgentID // current owner of this smart contract
+  getIdentityClaims:
+    results:
+      identityClaims: IdentityClaim[]
+  getDeclarations:
+    results:
+      declarations: Declaration[]
+  getGraphOfTrustInfo:
+    results:
+      info: String
+  getSignatureInfo:
+    results:
+      signature: String

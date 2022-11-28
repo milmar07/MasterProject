@@ -1,0 +1,11 @@
+/home/milmar07/wasp-master/contracts/wasm/target/wasm32-unknown-unknown/release/deps/signature-e2b3e8eecf9ee1c7.rmeta: /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/lib.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/error.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signature.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signer.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/verifier.rs
+
+/home/milmar07/wasp-master/contracts/wasm/target/wasm32-unknown-unknown/release/deps/libsignature-e2b3e8eecf9ee1c7.rlib: /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/lib.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/error.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signature.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signer.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/verifier.rs
+
+/home/milmar07/wasp-master/contracts/wasm/target/wasm32-unknown-unknown/release/deps/signature-e2b3e8eecf9ee1c7.d: /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/lib.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/error.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signature.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signer.rs /home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/verifier.rs
+
+/home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/lib.rs:
+/home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/error.rs:
+/home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signature.rs:
+/home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/signer.rs:
+/home/milmar07/.cargo/registry/src/github.com-1ecc6299db9ec823/signature-1.3.2/src/verifier.rs:
