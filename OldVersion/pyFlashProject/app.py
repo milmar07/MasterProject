@@ -76,7 +76,3 @@ def identity_create():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-def sumAllNumbers(a,b,c):
-    return a+b+c

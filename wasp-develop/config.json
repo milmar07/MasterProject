@@ -22,7 +22,7 @@
     "disableEvents": true
   },
   "inx": {
-    "address": "0.0.0.0:14265",
+    "address": "135.181.18.56:15600",
     "maxConnectionAttempts": 30,
     "targetNetworkName": ""
   },
