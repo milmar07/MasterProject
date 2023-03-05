@@ -2,8 +2,6 @@
 
 SETUP PROCEDURE
 
-Steps to reproduce the behavior:
-The bug can be recreated using an EC2 instance from AWS
 install docker using the script below:
 sudo apt-get update -y
 
