@@ -1,0 +1,21 @@
+{% block body %}
+    <h1>Create Sensor</h1>
+    <form action="{{ url_for('create_sensor') }}" method="POST">
+        <label for="id">Sensor ID (Device EUI):</label>
+        <input type="text" name="id" required>
+        <br>
+        <label for="organization_id">Organization ID:</label>
+        <input type="number" name="organization_id" required>
+        <br>
+        <label for="sensor_type">Sensor Type:</label>
+        <input type="text" name="sensor_type" required>
+        <br>
+        <label for="location">Location:</label>
+        <input type="text" name="location" required>
+        <br>
+        <label for="additional_information">Additional Information:</label>
+        <input type="text" name="additional_information">
+        <br>
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}

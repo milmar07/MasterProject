@@ -1,0 +1,15 @@
+{% block body %}
+    <h1>Create Identity Claim</h1>
+    <form action="{{ url_for('create_identity_claim') }}" method="POST">
+        <label for="sensor_id">Sensor ID:</label>
+        <input type="text" name="sensor_id" required>
+        <br>
+        <label for="organization_id">Organization ID:</label>
+        <input type="number" name="organization_id" required>
+        <br>
+        <label for="validation_url">Validation URL:</label>
+        <input type="text" name="validation_url" required>
+        <br>
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}
