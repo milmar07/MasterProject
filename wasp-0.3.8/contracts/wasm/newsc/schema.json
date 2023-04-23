@@ -1,0 +1,43 @@
+{
+  "name": "newSC",
+  "description": "newSC description",
+  "events": {},
+  "structs": {},
+  "typedefs": {},
+  "state": {
+    "owner": "AgentID"
+  },
+  "funcs": {
+    "init": {
+      "params": {
+        "owner": "AgentID?"
+      }
+    },
+    "setOwner": {
+      "access": "owner",
+      "params": {
+        "owner": "AgentID"
+      }
+    },
+    "registerOrganization": {
+      "params": {
+        "orgId": "String",
+        "orgName": "String"
+      }
+    },
+    "registerSensor": {
+      "params": {
+        "sensorId": "String",
+        "sensorName": "String",
+        "orgId": "String"
+      }
+    }
+  },
+  "views": {
+    "getOwner": {
+      "results": {
+        "owner": "AgentID"
+      }
+    }
+  }
+}

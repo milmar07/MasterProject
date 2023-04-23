@@ -1,0 +1,22 @@
+{
+  "name": "mysmartcontract",
+  "collaborators": [
+    "John Doe <john@doe.org>"
+  ],
+  "description": "THe Graph of Trust is a distributed public key infrastructure",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/iotaledger/wasp"
+  },
+  "files": [
+    "mysmartcontract_bg.wasm",
+    "mysmartcontract.js",
+    "mysmartcontract_bg.js",
+    "mysmartcontract.d.ts"
+  ],
+  "module": "mysmartcontract.js",
+  "types": "mysmartcontract.d.ts",
+  "sideEffects": false
+}

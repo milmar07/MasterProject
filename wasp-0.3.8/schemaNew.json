@@ -1,0 +1,136 @@
+{
+  "name": "GraphOfTrust",
+  "description": "The Graph of Trust is a distributed public key infrastructure",
+  "events": {
+    "iccreated": {
+      "timestamp": "Int64",
+      "transactionHash": "Hash",
+      "identifier": "String",
+      "validationUrl": "String",
+      "publicKey": "String",
+      "signature": "String"
+    },
+    "dcreated": {
+      "timestamp": "Int64",
+      "transactionHash": "Hash",
+      "signorHash": "Hash",
+      "objectHash": "Hash",
+      "declarationType": "String",
+      "signature": "String"
+    }
+  },
+  "structs": {
+    "IdentityClaim": {
+      "timestamp": "Int64",
+      "transactionHash": "Hash",
+      "identifier": "String",
+      "validationUrl": "String",
+      "publicKey": "String",
+      "signature": "String"
+    },
+    "Declaration": {
+      "timestamp": "Int64",
+      "transactionHash": "Hash",
+      "signorHash": "Hash",
+      "objectHash": "Hash",
+      "declarationType": "String",
+      "signature": "String"
+    },
+    "Organization": {
+      "id": "String",
+      "name": "String"
+    },
+    "Sensor": {
+      "id": "String",
+      "organizationId": "String",
+      "publicKey": "String"
+    }
+  },
+  "typedefs": {},
+  "state": {
+    "owner": "AgentID",
+    "identityClaims": "map[Hash]IdentityClaim",
+    "declarations": "map[Hash]Declaration",
+    "organizations": "map[String]Organization",
+    "sensors": "map[String]Sensor"
+  },
+  "funcs": {
+    "init": {
+      "params": {
+        "owner": "AgentID?"
+      }
+    },
+    "setOwner": {
+      "access": "owner",
+      "params": {
+        "owner": "AgentID"
+      }
+    },
+    "createIdentityClaim": {
+      "params": {
+        "identifier": "String",
+        "validationUrl": "String",
+        "publicKey": "String",
+        "signature": "String"
+      }
+    },
+    "createDeclaration": {
+      "params": {
+        "signorHash": "Hash",
+        "objectHash": "Hash",
+        "declarationType": "String",
+        "signature": "String"
+      }
+    },
+    "registerOrganization": {
+      "params": {
+        "id": "String",
+        "name": "String"
+      }
+    },
+    "registerSensor": {
+      "params": {
+        "id": "String",
+        "organizationId": "String",
+        "publicKey": "String"
+      }
+    }
+  },
+  "views": {
+    "getOwner": {
+      "results": {
+        "owner": "AgentID"
+      }
+    },
+    "getIdentityClaims": {
+      "results": {
+        "identityClaims": "IdentityClaim[]"
+      }
+    },
+    "getDeclarations": {
+      "results": {
+        "declarations": "Declaration[]"
+      }
+    },
+    "getGraphOfTrustInfo": {
+      "results": {
+        "info": "String"
+      }
+    },
+    "getSignatureInfo": {
+      "results": {
+        "signature": "String"
+      }
+    },
+    "getRegisteredOrganizations": {
+      "results": {
+        "organizations": "Organization[]"
+      }
+    },
+    "getRegisteredSensors": {
+      "results": {
+        "sensors": "Sensor[]"
+      }
+    }
+  }
+}
