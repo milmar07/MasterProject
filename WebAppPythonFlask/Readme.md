@@ -73,8 +73,6 @@ git clone https://github.com/milmar07/MasterProject.git
 cd WebAppPythonFlask
 ```
 
-Replace `your-username` with your GitHub username.
-
 ### 4. Create a Virtual Environment and Install Dependencies
 
 Create a virtual environment and activate it:
