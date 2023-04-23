@@ -130,34 +130,6 @@ Exit the PostgreSQL user account:
 exit
 ```
 
-### 7. Update Database Connection String
-
-Open the `app.py` file and update the `SQLALCHEMY_DATABASE_URI` value with your PostgreSQL username and password:
-
-```python
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/flask_db'
-```
-
-Replace `<username>` and `<password>` with the PostgreSQL username and password you created earlier.
-
-### 8. Initialize the Database
-
-Run the following command to initialize the database with the required tables:
-
-```
-python3 init_db.py
-```
-
-### 9. Run the Application
-
-Start the Flask development server:
-
-```
-python3 app.py
-```
-
-The application should now be accessible at `http://localhost:5000`.
-
 ## Usage
 
 1. Run the application:
