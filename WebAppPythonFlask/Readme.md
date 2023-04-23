@@ -147,5 +147,3 @@ exit
 Your project is licensed under the [MIT License](LICENSE).
 
 ---
-
-Please customize the Readme.md file to better reflect the specific details of your project. Replace placeholders like "Your Project Name", "yourusername", and "your-repo-name" with the appropriate information. Also, make sure to add any additional information or sections that you think would be useful for users of your project.
