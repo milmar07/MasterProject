@@ -15,7 +15,7 @@ This solution is ideal for organizations that require a secure and reliable way 
 ## Table of Contents
 
 1. [Requirements](#requirements)
-2. [Installation](#installation)
+2. [Installation Guide for Ubuntu Linux](#installation)
 3. [Usage](#usage)
 4. [License](#license)
 
@@ -30,39 +30,135 @@ This solution is ideal for organizations that require a secure and reliable way 
 - Cryptography
 - IOTA Wasp node
 
-## Installation
 
-1. Clone the repository:
+## Installation Guide for Ubuntu Linux
 
-   ```
-   git clone https://github.com/yourusername/your-repo-name.git
-   cd your-repo-name
-   ```
+This guide will walk you through the installation process for each component required to run the IoT Data Validation and Storage with IOTA Wasp Smart Contracts web application on Ubuntu Linux.
 
-2. Create a virtual environment and activate it:
+### 1. Install Python 3 and pip
 
-   ```
-   python3 -m venv venv
-   source venv/bin/activate  # On Windows: .\venv\Scripts\activate
-   ```
+Ubuntu 20.04 and later versions come with Python 3.8 pre-installed. To check if you have Python 3 installed, open a terminal and run:
 
-3. Install the required packages:
+```
+python3 --version
+```
 
-   ```
-   pip install -r requirements.txt
-   ```
+If Python 3 is not installed, run the following command:
 
-4. Set up the environment variables for your database:
+```
+sudo apt-get update
+sudo apt-get install python3
+```
 
-   ```
-   export DATABASE_URL="postgresql://username:password@localhost/db_name"  # On Windows: set DATABASE_URL=postgresql://username:password@localhost/db_name
-   ```
+Install pip, the Python package manager:
 
-5. Create the necessary tables in your PostgreSQL database:
+```
+sudo apt-get install python3-pip
+```
 
-   ```
-   python create_tables.py
-   ```
+### 2. Install Virtualenv
+
+Install the virtualenv package to create isolated Python environments:
+
+```
+pip3 install virtualenv
+```
+
+### 3. Clone the Repository
+
+Clone the project repository from GitHub:
+
+```
+git clone https://github.com/your-username/iot-data-validation-and-storage.git
+cd iot-data-validation-and-storage
+```
+
+Replace `your-username` with your GitHub username.
+
+### 4. Create a Virtual Environment and Install Dependencies
+
+Create a virtual environment and activate it:
+
+```
+virtualenv venv
+source venv/bin/activate
+```
+
+Install the required Python packages using the provided `requirements.txt` file:
+
+```
+pip install -r requirements.txt
+```
+
+### 5. Install PostgreSQL
+
+Install PostgreSQL using the following commands:
+
+```
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+```
+
+### 6. Configure PostgreSQL
+
+Switch to the PostgreSQL user account:
+
+```
+sudo -u postgres -i
+```
+
+Create a new PostgreSQL user and database for the application:
+
+```
+createuser --interactive --pwprompt
+createdb flask_db --owner=<your_new_user>
+```
+
+Replace `<your_new_user>` with the username you created.
+
+Grant all privileges to the new user on the database:
+
+```
+psql
+GRANT ALL PRIVILEGES ON DATABASE flask_db TO <your_new_user>;
+\q
+```
+
+Replace `<your_new_user>` with the username you created.
+
+Exit the PostgreSQL user account:
+
+```
+exit
+```
+
+### 7. Update Database Connection String
+
+Open the `app.py` file and update the `SQLALCHEMY_DATABASE_URI` value with your PostgreSQL username and password:
+
+```python
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://<username>:<password>@localhost/flask_db'
+```
+
+Replace `<username>` and `<password>` with the PostgreSQL username and password you created earlier.
+
+### 8. Initialize the Database
+
+Run the following command to initialize the database with the required tables:
+
+```
+python3 init_db.py
+```
+
+### 9. Run the Application
+
+Start the Flask development server:
+
+```
+python3 app.py
+```
+
+The application should now be accessible at `http://localhost:5000`.
 
 ## Usage
 
