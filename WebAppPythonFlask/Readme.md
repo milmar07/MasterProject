@@ -15,7 +15,7 @@ This solution is ideal for organizations that require a secure and reliable way 
 ## Table of Contents
 
 1. [Requirements](#requirements)
-2. [Installation Guide for Ubuntu Linux](#Installation Guide for Ubuntu Linux)
+2. [Installation Guide for Ubuntu Linux](#installation)
 3. [Usage](#usage)
 4. [License](#license)
 
