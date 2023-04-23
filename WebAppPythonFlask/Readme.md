@@ -69,7 +69,7 @@ pip3 install virtualenv
 Clone the project repository from GitHub:
 
 ```
-git clone https://github.com/your-username/iot-data-validation-and-storage.git
+git clone [https://github.com/your-username/iot-data-validation-and-storage.git](https://github.com/milmar07/MasterProject.git)
 cd iot-data-validation-and-storage
 ```
 
