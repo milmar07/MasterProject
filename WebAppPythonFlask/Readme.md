@@ -4,11 +4,14 @@ This project is a web application designed to receive, validate, and store data 
 
 The key features of the application include:
 
-Receiving data from IoT sensors: The application is capable of receiving data from IoT devices in JSON format through a dedicated endpoint.
-Storing data in a PostgreSQL database: Sensor data is stored in a PostgreSQL database, making it easy to manage and query the information.
-Validating data using IOTA Wasp smart contracts: The application interacts with an IOTA Wasp smart contract to validate the received sensor data. This ensures the data's authenticity and integrity, providing a higher level of trust in the information.
-Web interface for managing organizations and sensors: The application features a user-friendly web interface for creating and managing organizations and their associated sensors. This allows users to easily set up and maintain their IoT infrastructure.
+1. **Receiving data from IoT sensors:** The application is capable of receiving data from IoT devices in JSON format through a dedicated endpoint.
+2. **Storing data in a PostgreSQL database:** Sensor data is stored in a PostgreSQL database, making it easy to manage and query the information.
+3. **Validating data using IOTA Wasp smart contracts:** The application interacts with an IOTA Wasp smart contract to validate the received sensor data. This ensures the data's authenticity and integrity, providing a higher level of trust in the information.
+4. **Web interface for managing organizations and sensors:** The application features a user-friendly web interface for creating and managing organizations and their associated sensors. This allows users to easily set up and maintain their IoT infrastructure.
+
 This solution is ideal for organizations that require a secure and reliable way to store and validate data from their IoT devices. By using IOTA Wasp smart contracts, the application provides a cutting-edge and transparent method for ensuring the trustworthiness of sensor data.
+
+
 ## Table of Contents
 
 1. [Requirements](#requirements)
