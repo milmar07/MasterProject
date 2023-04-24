@@ -102,27 +102,37 @@ sudo apt-get install postgresql postgresql-contrib
 Switch to the PostgreSQL user account:
 
 ```
-sudo -u postgres -i
+sudo -iu postgres psql
 ```
 
-Create a new PostgreSQL user and database for the application:
+Create a flask_db for your project:
 
 ```
-createuser --interactive --pwprompt
-createdb flask_db --owner=<your_new_user>
+CREATE DATABASE flask_db;
 ```
 
-Replace `<your_new_user>` with the username you created.
+Create a database user for your project
+
+```
+CREATE USER sammy WITH PASSWORD 'password';
 
 Grant all privileges to the new user on the database:
 
 ```
-psql
-GRANT ALL PRIVILEGES ON DATABASE flask_db TO <your_new_user>;
-\q
+GRANT ALL PRIVILEGES ON DATABASE flask_db TO sammy;
 ```
 
-Replace `<your_new_user>` with the username you created.
+Check if database is created:
+
+```
+\l
+````
+
+Exit out the PostgreSQL prompt by typing:
+
+```
+\q
+```
 
 Exit the PostgreSQL user account:
 
