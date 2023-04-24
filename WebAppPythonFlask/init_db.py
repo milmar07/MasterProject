@@ -21,7 +21,7 @@ def create_tables(conn):
     );
     """)
 
-    cursor.execute("""
+    cursor.execute("""git pull
     CREATE TABLE sensors (
         id SERIAL PRIMARY KEY,
         sensor_id VARCHAR(255) UNIQUE,
