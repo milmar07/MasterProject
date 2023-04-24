@@ -115,6 +115,7 @@ Create a database user for your project
 
 ```
 CREATE USER sammy WITH PASSWORD 'password';
+```
 
 Grant all privileges to the new user on the database:
 
