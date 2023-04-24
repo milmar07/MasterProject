@@ -17,8 +17,7 @@ def create_tables(conn):
         id SERIAL PRIMARY KEY,
         org_id VARCHAR(80) UNIQUE NOT NULL,
         name VARCHAR(255) UNIQUE,
-        public_key VARCHAR(2048) NOT NULL,
-        private_key VARCHAR(2048) NOT NULL
+        public_key VARCHAR(2048) NOT NULL
     );
     """)
 

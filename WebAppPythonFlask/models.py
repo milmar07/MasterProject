@@ -8,7 +8,6 @@ class Organization(db.Model):
     org_id = db.Column(db.String(80), unique=True, nullable=False)
     name = db.Column(db.String(255), unique=True)
     public_key = db.Column(db.String(2048), nullable=False)
-    private_key = db.Column(db.String(2048), nullable=False)
 
     def __repr__(self):
         return f"<Organization {self.name}>"

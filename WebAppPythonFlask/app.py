@@ -1,4 +1,5 @@
-from flask import Flask, render_template, url_for, redirect, request, jsonify
+from flask import Flask, render_template, url_for, redirect, request, jsonify, send_file
+import io
 import os
 import time
 import psycopg2
@@ -180,19 +181,19 @@ def ttn_data():
 @app.route('/create_organization', methods=['GET', 'POST'])
 def create_organization():
     if request.method == 'POST':
-        org_id = request.form['org_id']
-        name = request.form['name']
+        org_id = request.json['org_id']
+        name = request.json['name']
 
         # Generate the RSA key pair
         private_key, public_key = generate_rsa_key_pair()
 
         # Create a new organization with the generated public key and private key
-        new_organization = Organization(org_id=org_id, name=name, public_key=public_key, private_key=private_key)
+        new_organization = Organization(org_id=org_id, name=name, public_key=public_key)
 
         db.session.add(new_organization)
         db.session.commit()
 
-        return redirect(url_for('index'))
+        return jsonify({'private_key': private_key})
     return render_template('create_organization.html')
 
 
@@ -211,6 +212,8 @@ def create_sensor():
 
         return redirect(url_for('index'))
     return render_template('create_sensor.html')
+
+
 
 
 

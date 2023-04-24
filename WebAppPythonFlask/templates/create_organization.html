@@ -1,6 +1,6 @@
 {% block body %}
 <h1>Create Organization</h1>
-    <form method="post" action="{{ url_for('create_organization') }}">
+    <form id="create_organization_form">
         <label for="org_id">Organization ID:</label>
         <input type="text" name="org_id" id="org_id" required>
         <br>
@@ -9,4 +9,42 @@
         <br>
         <input type="submit" value="Create Organization">
     </form>
+
+    <script>
+        document.getElementById("create_organization_form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const orgId = document.getElementById("org_id").value;
+            const name = document.getElementById("name").value;
+
+            // Make AJAX request to create organization
+            const response = await fetch('{{ url_for("create_organization") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ org_id: orgId, name: name }),
+            });
+
+            if (response.ok) {
+                // Download the private key file
+                const data = await response.json();
+                const private_key = data['private_key'];
+                const blob = new Blob([private_key], { type: 'text/plain' });
+                const download_url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = download_url;
+                a.download = 'private_key.pem';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                // Redirect to the index page
+                window.location.href = '{{ url_for("index") }}';
+            } else {
+                // Handle error (you can customize this as needed)
+                alert("Organization ID already exists, or enter a valid number for the organization ID.");
+            }
+        });
+    </script>
 {% endblock %}
