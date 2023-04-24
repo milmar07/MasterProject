@@ -151,15 +151,18 @@ pip install Flask psycopg2-binary
 
 ## Usage
 
-1. Run the application:
-
+1. If the database setup is completed firt run init_db.py in order to create all the tables and relations:
+   ```
+   python init_db.py
+   ```
+2. When the database is updated, start the application
    ```
    python app.py
    ```
 
-2. Open a web browser and navigate to http://127.0.0.1:5000/.
+3. Open a web browser and navigate to http://127.0.0.1:5000/.
 
-3. Use the web interface to create organizations and sensors, and interact with your IOTA Wasp smart contract.
+4. Use the web interface to create organizations and sensors, and interact with your IOTA Wasp smart contract.
 
 ## License
 
