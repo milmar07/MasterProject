@@ -140,6 +140,14 @@ Exit the PostgreSQL user account:
 exit
 ```
 
+### 4. Install Flas and psycopg2
+
+With your virtual environment activated, uses pip to install Flask and the psycopg2 library:
+
+```
+pip install Flask psycopg2-binary
+```
+
 ## Usage
 
 1. Run the application:
