@@ -119,6 +119,9 @@ def generate_rsa_key_pair():
 
     return pem_private_key.decode('utf-8'), pem_public_key.decode('utf-8')
 
+@app.route('/test.html')
+def test():
+    return send_file('test.html')
 
 @app.route('/ttn', methods=['POST'])
 def ttn_data():
@@ -214,6 +217,9 @@ def create_sensor():
     return render_template('create_sensor.html')
 
 
+@app.route('/test_base')
+def test_base():
+    return render_template('test_base.html')
 
 
 
