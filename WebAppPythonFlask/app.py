@@ -193,6 +193,9 @@ def create_organization():
         # Create a new organization with the generated public key and private key
         new_organization = Organization(org_id=org_id, name=name, public_key=public_key)
 
+        # Call the smart contract to register the organization
+        wasp_create_organization(CHAIN_ID, org_id, public_key)
+
         db.session.add(new_organization)
         db.session.commit()
 
@@ -210,11 +213,16 @@ def create_sensor():
         org_id = request.form['org_id']
 
         new_sensor = Sensor(sensor_id=sensor_id, sensor_type=sensor_type, location=location, org_id=org_id)
+
+        # Call the smart contract to register the sensor
+        wasp_create_sensor(CHAIN_ID, sensor_id, org_id)
+
         db.session.add(new_sensor)
         db.session.commit()
 
         return redirect(url_for('index'))
     return render_template('create_sensor.html')
+
 
 
 @app.route('/test_base')
