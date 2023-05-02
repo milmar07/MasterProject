@@ -24,5 +24,5 @@ The overall architecture of the project consists of four main components: IoT de
 ## Getting Started
 Please refer to the individual directories within this repository for more detailed information on setting up and using each component of the project.
 
-1. [Web Application](./WebAppPythonFlask/README.md): Setup and usage instructions for the Flask web application.
+1. [Web Application](https://github.com/milmar07/MasterProject/WebAppPythonFlask/README.md): Setup and usage instructions for the Flask web application.
 2. [IOTA Wasp Smart Contracts](./wasp-0.3.8/README.md): Information on deploying and interacting with the smart contract on the IOTA Wasp platform.
