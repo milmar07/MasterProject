@@ -25,3 +25,6 @@ Please read [this](documentation/docs/contribute.md) before creating a pull requ
 
 You can also join our [Discord server](https://discord.iota.org/) and ping us
 in `#smartcontracts-dev`.
+
+[FOR TUTORIAL PLEASE FOLLOW THIS](https://www.youtube.com/watch?v=eV2AoV3QPC4&list=PLMbc46iGTB_SCQ-Ut_c8__ssMDFUusVBJ)
+
