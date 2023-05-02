@@ -1,91 +1,33 @@
-# MasterProject
+# Secure IoT Data Management System using IOTA and Smart Contracts
 
-SETUP PROCEDURE
+This project aims to implement a secure IoT data management system using IOTA distributed ledger technology and Wasp Smart Contracts. The primary goal is to create a transparent, tamper-resistant, and efficient system for data validation and storage, improving security and trust within the IoT ecosystem.
 
-install docker using the script below:
-sudo apt-get update -y
+## Technologies and Components
+- IOTA: A distributed ledger technology specifically designed for the Internet of Things, providing a scalable and feeless solution for secure data and value transfer.
+- IOTA Wasp Smart Contracts: A layer built on top of the IOTA network that enables the creation and execution of smart contracts, offering advantages such as decentralization, automation, scalability, and tamper-resistance.
+- Flask: A lightweight, flexible, and easy-to-use Python-based web framework used for developing web applications.
+- The Things Network (TTN): A global, open-source IoT data network that serves as a data communication hub, forwarding IoT data to our web application.
 
-sudo apt-get install \
-    ca-certificates \
-    curl \
-    gnupg \
-    lsb-release -y
+## Project Overview
+The overall architecture of the project consists of four main components: IoT devices, The Things Network (TTN), the web application, and the IOTA Wasp Smart Contracts platform.
 
+1. **IoT Devices**: IoT devices are responsible for collecting data, such as temperature, and sending it to The Things Network.
+2. **The Things Network (TTN)**: TTN serves as a data communication hub, forwarding the IoT data to our web application.
+3. **Web Application**: Built using Flask, the web application securely manages and stores the IoT data, and interacts with the IOTA Wasp Smart Contracts platform for data validation.
+4. **IOTA Wasp Smart Contracts**: The platform provides the underlying blockchain-based infrastructure that ensures the security, integrity, and validation of the IoT data.
 
-#Add docker GPG key
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+## Project Features
+- **Web Application**: Allows users to create organizations, register sensors, and display data. Implements RSA key pair generation for signing and validating data.
+- **Smart Contract**: Serves as the core of the data validation process, securely storing public keys of registered organizations and providing methods for creating new organizations and sensors, as well as validating sensor data.
+- **Interaction between Components**: The web application communicates with the smart contract via the IOTA Wasp platform's API. IoT devices send data to the web application, which signs the data using the organization's private key before sending it to the smart contract for validation.
 
+## Getting Started
+Please refer to the individual directories within this repository for more detailed information on setting up and using each component of the project.
 
-#Setup docker repository
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+1. [IoT Devices](./IoT_Devices/README.md): Instructions for setting up and configuring IoT devices.
+2. [The Things Network (TTN)](./TheThingsNetwork/README.md): Guide for connecting IoT devices to TTN and forwarding data to the web application.
+3. [Web Application](./Web_Application/README.md): Setup and usage instructions for the Flask web application.
+4. [IOTA Wasp Smart Contracts](./IOTA_Wasp_Smart_Contracts/README.md): Information on deploying and interacting with the smart contract on the IOTA Wasp platform.
 
-#Install docker engine
-sudo apt-get update -y
-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin -y
-
-#Enable docker without sudo
-sudo groupadd docker
-sudo usermod -aG docker $USER
-
-#Restart VM and try docker
-#newgrp docker
-#docker run hello-world
-
-
-Start the node-docker-setup
-git clone https://github.com/iotaledger/node-docker-setup.git
-
-cd node-docker-setup/docker
-
-echo "COMPOSE_FILE=docker-compose.yml" >> .env
-echo "ACME_EMAIL=<your email>" >> .env
-echo "NODE_HOST=<your public EC2 DNS >" >> .env
-echo "HTTP_PORT=9000" >> .env
-
-sudo ./prepare_docker.sh
-
-#Set admin as password
-echo "DASHBOARD_PASSWORD=6d386723b3d573458548e20f37f1a556ec653f49e9c2c5133070126f2b7a897d" >> .env
-echo "DASHBOARD_SALT=76299b26accd3d4d755be98a898476db47934ff49d63c7f2e06d337ae755df03" >> .env
-echo "COMPOSE_PROFILES=monitoring,wasp" >> .env
-
-docker compose up -d
-
-
-install wasp-cli
-#Install Prerequirements
-sudo apt update -y
-sudo apt install golang-go -y
-
-sudo add-apt-repository ppa:ethereum/ethereum -y
-sudo apt-get update -y
-sudo apt-get install solc -y
-
-sudo apt install make -y
-
-#Install wasp
-git clone https://github.com/iotaledger/wasp.git
-cd wasp
-git checkout v0.3.8
-make install
-
-#Add wasp-cli to path
-echo "export PATH=$PATH:$(go env GOPATH)/bin" >> ~/.bashrc
-source ~/.bashrc
-
-#Initialize wasp-cli
-cd ..
-
-wasp-cli init
-
-wasp-cli set l1.apiaddress https://api.testnet.shimmer.network
-wasp-cli set l1.faucetaddress https://faucet.testnet.shimmer.network
-
-wasp-cli set wasp.0.api http://<your public EC2 DNS>:9000/wasp/api
-wasp-cli set wasp.0.nanomsg http://localhost:5550
-wasp-cli set wasp.0.peering http://localhost:4000
-
-wasp-cli request-funds
+## License
+This project is licensed under the [MIT License](./LICENSE).
