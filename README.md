@@ -24,8 +24,8 @@ The overall architecture of the project consists of four main components: IoT de
 ## Getting Started
 Please refer to the individual directories within this repository for more detailed information on setting up and using each component of the project.
 
-1. [IoT Devices](./IoT_Devices/README.md): Instructions for setting up and configuring IoT devices.
-2. [The Things Network (TTN)](./TheThingsNetwork/README.md): Guide for connecting IoT devices to TTN and forwarding data to the web application.
+1. [IoT Devices]: Instructions for setting up and configuring IoT devices.
+2. [The Things Network (TTN)]: Guide for connecting IoT devices to TTN and forwarding data to the web application.
 3. [Web Application](./Web_Application/README.md): Setup and usage instructions for the Flask web application.
 4. [IOTA Wasp Smart Contracts](./IOTA_Wasp_Smart_Contracts/README.md): Information on deploying and interacting with the smart contract on the IOTA Wasp platform.
 
