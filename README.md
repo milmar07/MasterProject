@@ -26,6 +26,3 @@ Please refer to the individual directories within this repository for more detai
 
 1. [Web Application](./WebAppPythonFlask/README.md): Setup and usage instructions for the Flask web application.
 2. [IOTA Wasp Smart Contracts](./wasp-0.3.8/README.md): Information on deploying and interacting with the smart contract on the IOTA Wasp platform.
-
-## License
-This project is licensed under the [MIT License](./LICENSE).
