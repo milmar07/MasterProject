@@ -20,9 +20,3 @@ The overall architecture of the project consists of four main components: IoT de
 - **Web Application**: Allows users to create organizations, register sensors, and display data. Implements RSA key pair generation for signing and validating data.
 - **Smart Contract**: Serves as the core of the data validation process, securely storing public keys of registered organizations and providing methods for creating new organizations and sensors, as well as validating sensor data.
 - **Interaction between Components**: The web application communicates with the smart contract via the IOTA Wasp platform's API. IoT devices send data to the web application, which signs the data using the organization's private key before sending it to the smart contract for validation.
-
-## Getting Started
-Please refer to the individual directories within this repository for more detailed information on setting up and using each component of the project.
-
-1. [Web Application](https://github.com/milmar07/MasterProject/tree/main/WebAppPythonFlask/WebAppPythonFlask): Setup and usage instructions for the Flask web application.
-2. [IOTA Wasp Smart Contracts](https://github.com/milmar07/MasterProject/tree/main/WebAppPythonFlask: Information on deploying and interacting with the smart contract on the IOTA Wasp platform.
