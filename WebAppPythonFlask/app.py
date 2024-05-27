@@ -1,21 +1,15 @@
-from flask import Flask, render_template, url_for, redirect, request, jsonify, send_file
-import io
-import os
+from flask import Flask, jsonify, render_template, url_for, redirect, request, send_file
+import paho.mqtt.client as mqtt
+import json
 import time
-import psycopg2
-from rsa import PublicKey
-import hashlib, secrets
-from flask_sqlalchemy import SQLAlchemy
+import csv
+from datetime import datetime
 from models import db, Organization, Sensor, SensorData
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from cryptography.hazmat.backends import default_backend
 import base64
-import subprocess
 import requests
-from datetime import datetime
-import csv
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://sammy:password@localhost/flask_db'
@@ -23,59 +17,76 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db.init_app(app)
 
+# MQTT client details
+mqtt_broker = "eu1.cloud.thethings.network"
+mqtt_port = 1883
+mqtt_username = "your_application_id@tenant"
+mqtt_password = "your_api_key"
+mqtt_topic = "v3/your_application_id@tenant/devices/your_device_id/up"
 
-#Chain ID, we can change this regarding our changes in the smart contract
-CHAIN_ID = "tst1pr5alu4ctddftkav3ad4cjr75zgzrqzgaatc9p9cln6amu7668wtug7wfkv"
-# SC Name, we can change this regarding our changes in the smart contract
-SMART_CONTRACT_NAME = "mysmartcontract"
+received_data = []
 
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code " + str(rc))
+    client.subscribe(mqtt_topic)
 
-# WaspClient functions
-def get_wasp_node_url():
-    return "http://localhost:9090"  # Adjust the URL to your IOTA Wasp node's address and port
+def on_message(client, userdata, msg):
+    data = json.loads(msg.payload)
+    received_data.append(data)
+    print(f"Received message: {data}")
+    process_sensor_data(data)
 
+def process_sensor_data(data):
+    device_id = data['end_device_ids']['device_id']
+    application_id = data['end_device_ids']['application_ids']['application_id']
+    temperature = data['uplink_message']['decoded_payload']['temperature']
+    print("Device ID:", device_id)
+    print("Temperature:", temperature)
 
-def wasp_send_request(endpoint, data=None, method="GET"):
-    url = f"{get_wasp_node_url()}/chain/{CHAIN_ID}/{SMART_CONTRACT_NAME}/{endpoint}"
-    if method == "POST":
-        response = requests.post(url, json=data)
+    ttn_time_str = data['received_at']
+    ttn_time = datetime.strptime(ttn_time_str, "%Y-%m-%dT%H:%M:%S.%fZ")
+    is_valid = False
+
+    sensor = Sensor.query.filter_by(sensor_id=device_id).first()
+    if sensor:
+        organization = Organization.query.filter_by(id=sensor.org_id).first()
+        if organization:
+            new_sensor_data = SensorData(sensor_id=sensor.id, temperature_reading=temperature, timestamp=int(time.time()))
+            db.session.add(new_sensor_data)
+            db.session.commit()
+            print(f"Data saved for organization {organization.name}")
+
+            # Sign the data
+            signed_data = sign_data(organization.private_key, str(temperature))
+
+            # Call the smart contract for validation
+            response = wasp_validate_sensor_data(sensor_id=device_id, signed_data=signed_data)
+
+            # Get the current time
+            end_time = time.time()
+
+            # Calculate the time difference
+            time_difference = end_time - ttn_time.timestamp()
+        
+            # If the smart contract validation is successful, set the is_valid flag to True
+            if response.get('is_valid'):
+                new_sensor_data.is_valid = True
+                db.session.commit()
+                is_valid = True
+
+        else:
+            print("Organization not found")
+            end_time = time.time()
     else:
-        response = requests.get(url, json=data)
+        print("Sensor not found")
+        end_time = time.time()
 
-    return response.json()
+    time_difference = end_time - ttn_time.timestamp()
 
-
-
-def wasp_create_organization(chain_id, organization_id, public_key):
-    data = {
-        "chain_id": chain_id,
-        "org_id": organization_id,
-        "public_key": public_key,
-    }
-    response = wasp_send_request("createOrganization", data, method="POST")
-
-    return response
-
-def wasp_create_sensor(chain_id, sensor_id, organization_id):
-    data = {
-        "chain_id": chain_id,
-        "sensor_id": sensor_id,
-        "org_id": organization_id,
-    }
-    response = wasp_send_request("createSensor", data, method="POST")
-    return response
-
-def wasp_validate_sensor_data(chain_id, sensor_id, signed_data):
-    data = {
-        "chain_id": chain_id,
-        "sensor_id": sensor_id,
-        "signed_data": signed_data,
-    }
-    response = wasp_send_request("validateSensorData", data, method="POST")
-    return response
-
-
-
+    # Write data to CSV file
+    with open('time.csv', mode='a', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        csv_writer.writerow([device_id, time_difference, application_id, temperature, is_valid, SMART_CONTRACT_NAME])
 
 def sign_data(private_key_pem, data):
     private_key = serialization.load_pem_private_key(
@@ -94,7 +105,6 @@ def sign_data(private_key_pem, data):
     )
 
     return base64.b64encode(signature).decode('utf-8')
-
 
 def generate_rsa_key_pair():
     private_key = rsa.generate_private_key(
@@ -119,67 +129,36 @@ def generate_rsa_key_pair():
 
     return pem_private_key.decode('utf-8'), pem_public_key.decode('utf-8')
 
-@app.route('/test.html')
-def test():
-    return send_file('test.html')
-
-@app.route('/ttn', methods=['POST'])
-def ttn_data():
-    data = request.get_json()
-    print("Received data from TTN:", data)
-
-    device_id = data['end_device_ids']['device_id']
-    application_id = data['end_device_ids']['application_ids']['application_id']
-    temperature = data['uplink_message']['decoded_payload']['temperature']
-    print("Device ID:", device_id)
-    print("Temperature:", temperature)
-
-    ttn_time_str = data['time']
-    ttn_time = datetime.strptime(ttn_time_str, "%Y-%m-%dT%H:%M:%S.%fZ")
-    is_valid = False
-
-    sensor = Sensor.query.filter_by(sensor_id=device_id).first()
-    if sensor:
-        organization = Organization.query.filter_by(id=sensor.org_id).first()
-        if organization:
-            new_sensor_data = SensorData(sensor_id=sensor.id, temperature_reading=temperature, timestamp=int(time.time()))
-            db.session.add(new_sensor_data)
-            db.session.commit()
-            print(f"Data saved for organization {organization.name}")
-
-            # Sign the data
-            signed_data = sign_data(organization.private_key, str(temperature))
-
-            # Call the smart contract for validation
-            response = wasp_validate_sensor_data(sensor_id=device_id, organization_public_key=organization.public_key, data=str(temperature), signed_data=signed_data)
-
-            # Get the current time
-            end_time = time.time()
-
-            # Calculate the time difference
-            time_difference = end_time - ttn_time
-        
-            # If the smart contract validation is successful, set the is_valid flag to True
-            if response['is_valid']:
-                new_sensor_data.is_valid = True
-                db.session.commit()
-                is_valid = True
-
-        else:
-            print("Organization not found")
-            end_time = time.time()
+def wasp_send_request(endpoint, data=None, method="GET"):
+    url = f"{get_wasp_node_url()}/chain/{CHAIN_ID}/{SMART_CONTRACT_NAME}/{endpoint}"
+    if method == "POST":
+        response = requests.post(url, json=data)
     else:
-        print("Sensor not found")
-        end_time = time.time()
+        response = requests.get(url, json=data)
+    return response.json()
 
-    time_difference = end_time - ttn_time
+def wasp_validate_sensor_data(sensor_id, signed_data):
+    data = {
+        "chain_id": CHAIN_ID,
+        "sensor_id": sensor_id,
+        "signed_data": signed_data,
+    }
+    response = wasp_send_request("validateSensorData", data, method="POST")
+    return response
 
-    # Write data to CSV file
-    with open('time.csv', mode='a', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow([device_id, time_difference, application_id, temperature, is_valid, SMART_CONTRACT_NAME])    
+def get_wasp_node_url():
+    return "http://localhost:9090"  # Adjust the URL to your IOTA Wasp node's address and port
 
-    return jsonify({"status": "success"})
+mqtt_client = mqtt.Client()
+mqtt_client.username_pw_set(mqtt_username, mqtt_password)
+mqtt_client.on_connect = on_connect
+mqtt_client.on_message = on_message
+mqtt_client.connect(mqtt_broker, mqtt_port, 60)
+mqtt_client.loop_start()
+
+@app.route('/data', methods=['GET'])
+def get_data():
+    return jsonify(received_data)
 
 @app.route('/create_organization', methods=['GET', 'POST'])
 def create_organization():
@@ -202,8 +181,6 @@ def create_organization():
         return jsonify({'private_key': private_key})
     return render_template('create_organization.html')
 
-
-
 @app.route('/create_sensor', methods=['GET', 'POST'])
 def create_sensor():
     if request.method == 'POST':
@@ -222,14 +199,6 @@ def create_sensor():
 
         return redirect(url_for('index'))
     return render_template('create_sensor.html')
-
-
-
-@app.route('/test_base')
-def test_base():
-    return render_template('test_base.html')
-
-
 
 @app.route('/')
 def index():
