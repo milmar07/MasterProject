@@ -6,7 +6,6 @@
         <a class="button" href="{{ url_for('create_sensor') }}">Create Sensor</a>
     </div>
 
-
     <h1>{% block title %}SC Data{% endblock %}</h1>
 
     <h2>Organizations</h2>
@@ -19,7 +18,7 @@
         <li>&nbsp;</li>
       {% endfor %}
     </ul>
-  
+
     <h2>Sensors</h2>
     <ul>
       {% for sensor in sensors %}
@@ -30,7 +29,7 @@
         <li>&nbsp;</li>
       {% endfor %}
     </ul>
-  
+
     <h2>Temperature Readings</h2>
     <ul>
       {% for reading in sensor_data %}
@@ -42,4 +41,4 @@
         <li>&nbsp;</li>
       {% endfor %}
     </ul>
-  {% endblock %}
+{% endblock %}
